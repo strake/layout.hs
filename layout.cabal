@@ -1,0 +1,76 @@
+cabal-version:       3.0
+name:                layout
+version:             0.0.0.0
+synopsis:            See README for more info
+description:         See README for more info
+homepage:            https://github.com/strake/layout.hs
+bug-reports:         https://github.com/strake/layout.hs/issues
+license:             MPL-2.0
+license-file:        LICENSE
+author:              M Farkas-Dyck
+maintainer:          M Farkas-Dyck <strake888@gmail.com>
+copyright:           2020 M Farkas-Dyck
+build-type:          Simple
+extra-doc-files:     README.md
+                     CHANGELOG.md
+tested-with:         GHC == 8.8.3
+
+source-repository head
+  type:                git
+  location:            https://github.com/strake/layout.hs.git
+
+common c
+  build-depends:       base ^>= {4.12, 4.13, 4.14}
+                     , dlist ^>= 0.8.0.8
+                     , util ^>= 0.1.17.1
+  ghc-options:         -Wall
+                       -Wcompat
+                       -Wredundant-constraints
+                       -Wno-name-shadowing
+                       -Werror=incomplete-patterns
+                       -Werror=incomplete-uni-patterns
+                       -Werror=incomplete-record-updates
+                       -Werror=missing-fields
+                       -Werror=missing-methods
+  default-language:    Haskell2010
+  default-extensions:  UnicodeSyntax
+    LambdaCase
+    EmptyCase
+    InstanceSigs
+    PartialTypeSignatures
+    PolyKinds
+    ConstraintKinds
+    FlexibleContexts
+    FlexibleInstances
+    MonadComprehensions
+    StandaloneDeriving
+    DeriveTraversable
+    OverloadedStrings
+    NoMonomorphismRestriction
+
+library
+  import:              c
+  hs-source-dirs:      src
+  exposed-modules:
+    Data.Layout
+
+test-suite test
+  import:              c
+  type:                exitcode-stdio-1.0
+  hs-source-dirs:      test
+  main-is:             Spec.hs
+  build-depends:       layout
+  ghc-options:         -threaded
+                       -rtsopts
+                       -with-rtsopts=-N
+
+benchmark bench
+  import:              c
+  type:                exitcode-stdio-1.0
+  hs-source-dirs:      bench
+  main-is:             Main.hs
+  build-depends:       gauge
+                     , layout
+  ghc-options:         -threaded
+                       -rtsopts
+                       -with-rtsopts=-N
