@@ -1,6 +1,7 @@
+{-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE DerivingVia #-}
 
-module Data.Layout (Layout (..), empty, (<>), fold, foldMap, times, Builder, build, toBuilder) where
+module Data.Layout (Layout (..), empty, (<>), fold, foldMap, times, Builder, build, toBuilder, padToAlignment) where
 
 import Prelude hiding ((<>), foldMap, replicate)
 import Data.Bits (Bits (..))
@@ -45,3 +46,6 @@ build :: (Integral a, Bits a) => Builder a -> Layout a
 build = fold . unBuilder
 
 fi = fromIntegral
+
+padToAlignment :: (Integral a, Bits a) => Layout a -> Layout a
+padToAlignment l@Layout { logAlign } = l <> Layout { size = 0, logAlign }
